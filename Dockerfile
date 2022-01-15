@@ -3,5 +3,5 @@ WORKDIR /app
 COPY . .
 RUN npm install express
 RUN npm install express-device
-EXPOSE 5000
+EXPOSE 5001
 CMD [ "node", "app.js" ]
