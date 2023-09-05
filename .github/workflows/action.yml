@@ -12,7 +12,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Generate provenance
-        uses: slsa-framework/github-actions-demo@v0.1
+        #uses: slsa-framework/github-actions-demo@v0.1
+        uses: slsa-framework/slsa-github-generator/.github/workflows/builder_nodejs_slsa3.yml@v1.6.0
         with:
           artifact_path: package.json
 
