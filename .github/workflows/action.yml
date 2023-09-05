@@ -1,19 +1,23 @@
-name: 'Terraform Deploy to AWS ECR'
-
-on: [push]
-
-permissions:
-    id-token: write   # This is required for requesting the JWT
-    contents: read
-    actions: read
-
+name: Update cms/master
+on:
+  push:
+    branches:
+      - main
 jobs:
-  build:
-    permissions:
-      id-token: write # For signing
-      contents: read  # For repo checkout.
-      actions: read   # For getting workflow run info.
-    if: startsWith(github.ref, 'refs/tags/')
-    uses: slsa-framework/slsa-github-generator/.github/workflows/builder_nodejs_slsa3.yml@v1.6.0
-    with:
-      run-scripts: "ci, build"
+  update-cms-master:
+    name: Merge master into release after a PR is merged
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: Generate provenance
+        uses: slsa-framework/github-actions-demo@v0.1
+        with:
+          artifact_path: package.json
+
+      - name: Upload provenance
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: build.provenance
